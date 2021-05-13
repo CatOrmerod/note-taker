@@ -6,7 +6,7 @@ const fs = require('fs');
 const util = require('util');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 8080;
 
 //Set variables
 const writefileAsync = util.promisify(fs.writeFile);
@@ -16,6 +16,12 @@ const readFileAsync = util.promisify(fs.readFile);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// ROUTER
+// The below points our server to a series of "route" files.
+// These routes give our server a "map" of how to respond when users visit or request data from various URLs.
+
+require('./routes/apiRoutes')(app);
+require('./routes/htmlRoutes')(app);
 
 // Starts the server to begin listening
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
