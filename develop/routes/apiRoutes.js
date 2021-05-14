@@ -1,17 +1,33 @@
 //Dependancies
-const fs = require('fs');
-const util = require('util');
-const data = require('../db/db.json');
+const functions = require('../utils/functions')
+
 
 // ROUTING
-
 module.exports = (app) => {
     // API GET Requests
-    app.get('/api/notes', (req, res) => res.json(data));
+    app.get('/api/notes', (req, res) => {
+        const data = functions.readData();
+        res.json(data)
+    });
     // API POST Requests
     app.post('/api/notes', (req, res) => {
-        data.push(req.body);
-        fs.writeFileSync('db/db.json', JSON.stringify(data));
+        let newNote = req.body;
+        const data = functions.readData();
+        newNote.id = new Date().getTime();
+        data.push(newNote);
+        functions.writeData(data);
         res.json(true);
     });
+    // API DELETE Requests
+    app.delete('/api/notes/:id', (req, res) => {
+        const data = functions.readData();
+        for (let i = 0; i < data.length; i++) {
+            if(data[i].id == req.params.id) {
+                data.splice(i, 1);
+                break;
+            }
+        }
+        functions.writeData(data);
+        res.json(true);
+    })
 }
