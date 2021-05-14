@@ -1,5 +1,4 @@
 // Dependencies
-
 const express = require('express');
 
 const app = express();
@@ -13,8 +12,8 @@ app.use(express.json());
 // The below points our server to a series of "route" files.
 // These routes give our server a "map" of how to respond when users visit or request data from various URLs.
 
-require('./routes/apiRoutes')(app);
-require('./routes/htmlRoutes')(app);
+require('./develop/routes/apiRoutes')(app);
+require('./develop/routes/htmlRoutes')(app);
 
 // Starts the server to begin listening
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
