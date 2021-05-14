@@ -13,6 +13,7 @@ module.exports = (app) => {
     app.post('/api/notes', (req, res) => {
         let newNote = req.body;
         const data = functions.readData();
+        //use the current time/date as a unique id
         newNote.id = new Date().getTime();
         data.push(newNote);
         functions.writeData(data);
