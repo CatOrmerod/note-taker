@@ -13,5 +13,8 @@ module.exports = (app) => {
     // API GET Requests
     app.get('/api/notes', (req, res) => res.json(data));
     // API POST Requests
-    app.post('/api/notes', (req, res) => res.json(data));
+    app.post('/api/notes', (req, res) => {
+        data.push(req.body);
+        res.json(true);
+    });
 }
