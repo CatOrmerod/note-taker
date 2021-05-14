@@ -3,10 +3,6 @@ const fs = require('fs');
 const util = require('util');
 const data = require('../db/db.json');
 
-//Set variables
-const writefileAsync = util.promisify(fs.writeFile);
-const readFileAsync = util.promisify(fs.readFile);
-
 // ROUTING
 
 module.exports = (app) => {
@@ -15,6 +11,7 @@ module.exports = (app) => {
     // API POST Requests
     app.post('/api/notes', (req, res) => {
         data.push(req.body);
+        fs.writeFileSync('db/db.json', JSON.stringify(data));
         res.json(true);
     });
 }
